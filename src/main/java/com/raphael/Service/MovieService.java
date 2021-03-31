@@ -16,4 +16,9 @@ public class MovieService {
 	public Collection<Movie> getMovies() {
 		return movieDatabaseAccessObject.getMovies();
 	}
+
+	public Movie createMovie(Movie movie) {
+		return movieDatabaseAccessObject.createMovie(movie);
+		// can carry out business logic in here if required
+	}
 }

@@ -13,4 +13,8 @@ public class MovieDatabaseAccessObject {
 	public Collection<Movie> getMovies() {
 		return repository.findAll();
 	}
+
+	public Movie createMovie(Movie movie) {
+		return repository.insert(movie); //inserts book into the database
+	}
 }

@@ -3,9 +3,7 @@ package com.raphael.Controller;
 import com.raphael.Entity.Movie;
 import com.raphael.Service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -19,5 +17,10 @@ public class MovieController {
 	@GetMapping // lets spring know that this is for GET requests
 	public Collection<Movie> getMovies() {
 		return movieService.getMovies();
+	}
+
+	@PostMapping // lets spring know that this is for POST requests to our /movies route
+	public Movie postMovie(@RequestBody Movie movie) { //returns a movie back whenever someone POSTs a movie
+		return movieService.createMovie(movie);
 	}
 }
