@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+      $("#getBtn").click(function () {
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/movies/",
+          method: "GET",
+          processData: false,
+          success: function (response) {
+              console.log(response);
+              console.log(JSON.stringify(response[0]));
+              var result = "";
+              for (i = 0; i < response.length; i++) {
+                result += JSON.stringify(response[i]);
+                result += "\n";
+              }
+              document.getElementById("dataDisplay").innerHTML = result;
+          }
+        });
+      });
+    });
+
+    $(document).ready(function () {
+      $("#addBtn").click(function () {
+        $.ajax({
+          type: "POST",
+          data: "ON",
+          url: "http://localhost:8080/movies/",
+          method: "POST",
+          processData: false,
+          success: function (response) {
+              if (response != null && response.success) {
+              console.log("Success");
+              console.log(response.responseText);
+            } else {
+              console.log("Not successful");
+              console.log(response.responseText);
+          }
+        });
+      });
+    });
+
+
+
+
+</script>
+TESTING 123. DO HTML to JS, and just have ajax functions getting the responses that Spring makes.
+
+<p>testing</p>
+
+<textarea name="dataDisplay" id="dataDisplay" cols="60" rows="15"></textarea>
+<br>
+
+<div>
+    <button id="getBtn">Get all movies</button>
+</div>
+<br>
+<div>
+    <button id="addBtn">Add movie</button>
+</div>
+<br>
+<div>
+    <button>GET</button>
+</div>
+<br>
+<div>
+    <button>GET</button>
+</div>
+</body>
+</html>
