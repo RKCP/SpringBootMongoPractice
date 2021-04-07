@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>SpringBoot Demo</title>
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -18,7 +18,6 @@
           processData: false,
           success: function (response) {
               console.log(response);
-              console.log(JSON.stringify(response[0]));
               var result = "";
               for (i = 0; i < response.length; i++) {
                 result += JSON.stringify(response[i]);
@@ -32,19 +31,74 @@
 
     $(document).ready(function () {
       $("#addBtn").click(function () {
+      var val = ($("#dataDisplay").val());
         $.ajax({
           type: "POST",
-          data: "ON",
+          data: val,
+          dataType: 'json',
           url: "http://localhost:8080/movies/",
+          headers: {
+            'Content-Type' : 'application/json'
+          },
           method: "POST",
           processData: false,
           success: function (response) {
-              if (response != null && response.success) {
               console.log("Success");
-              console.log(response.responseText);
-            } else {
-              console.log("Not successful");
-              console.log(response.responseText);
+          }
+        });
+      });
+    });
+
+    $(document).ready(function () {
+      $("#getByID").click(function () {
+      var input = ($("#givenID").val());
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/movies/" + input,
+          method: "GET",
+          processData: false,
+          success: function (response) {
+              console.log(response);
+              document.getElementById("dataDisplay").innerHTML = JSON.stringify(response);;
+          }
+        });
+      });
+    });
+
+    $(document).ready(function () {
+      $("#deleteBtn").click(function () {
+      var input = ($("#givenID").val());
+        $.ajax({
+          type: "DELETE",
+          url: "http://localhost:8080/movies/" + input,
+          method: "DELETE",
+          processData: false,
+          success: function (response) {
+              console.log(response);
+              document.getElementById("dataDisplay").innerHTML = "Successfully Deleted: \n" + JSON.stringify(response);
+          }
+        });
+      });
+    });
+
+
+    $(document).ready(function () {
+      $("#updateBtn").click(function () {
+      var val = ($("#dataDisplay").val());
+      var input = ($("#givenID").val());
+        $.ajax({
+          type: "PUT",
+          data: val,
+          dataType: 'json',
+          url: "http://localhost:8080/movies/" + input,
+          headers: {
+            'Content-Type' : 'application/json'
+          },
+          method: "PUT",
+          processData: false,
+          success: function (response) {
+              console.log("Success");
+              document.getElementById("dataDisplay").innerHTML = "Successfully Updated: \n" + JSON.stringify(response);
           }
         });
       });
@@ -53,12 +107,18 @@
 
 
 
-</script>
-TESTING 123. DO HTML to JS, and just have ajax functions getting the responses that Spring makes.
 
-<p>testing</p>
+</script>
+Spring Hello World Application.
+<br>
+<br>
+<label for="givenID">ID:</label>
+<input type="text" id="givenID" name="givenID">
+<br>
+<br>
 
 <textarea name="dataDisplay" id="dataDisplay" cols="60" rows="15"></textarea>
+<br>
 <br>
 
 <div>
@@ -70,11 +130,15 @@ TESTING 123. DO HTML to JS, and just have ajax functions getting the responses t
 </div>
 <br>
 <div>
-    <button>GET</button>
+    <button id="getByID">Get Movie by ID</button>
 </div>
 <br>
 <div>
-    <button>GET</button>
+    <button id="deleteBtn">Delete Movie by ID</button>
+</div>
+<br>
+<div>
+    <button id="updateBtn">Update Movie by ID</button>
 </div>
 </body>
 </html>
